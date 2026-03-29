@@ -1,0 +1,42 @@
+name: Compress Extension
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Create zip file
+      run: |
+        zip -r PMM_Mod_Importer.zip \
+          content.js \
+          manifest.json \
+          popup.html \
+          popup.js \
+          icon128.png \
+          README.md \
+          LICENSE \
+          -x ".git/*" ".gitignore" ".gitattributes" ".github/*"
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: PMM_Mod_Importer
+        path: PMM_Mod_Importer.zip
+    
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: PMM_Mod_Importer.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
