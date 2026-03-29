@@ -1,49 +1,33 @@
-name: Compress Extension
+name: Package PMM Mod Importer
 
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
-  compress:
+  bundle:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    
-    - name: Create zip file
-      run: |
-        zip -r PMM_Mod_Importer.zip \
-          content.js \
-          manifest.json \
-          popup.html \
-          popup.js \
-          icon128.png \
-          README.md \
-          LICENSE \
-          -x ".git/*" ".gitignore" ".gitattributes" ".github/*"
-    
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: PMM_Mod_Importer
-        path: PMM_Mod_Importer.zip
-    
-    - name: Get version from manifest
-      id: version
-      run: |
-        VERSION=$(grep '"version"' manifest.json | head -1 | sed 's/.*"version": "\([^"]*\)".*/\1/')
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
-    
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: PMM_Mod_Importer.zip
-        tag_name: v${{ steps.version.outputs.version }}
-        generate_release_notes: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Prepare Folder Structure
+        run: |
+          mkdir PMM_Mod_Importer
+          cp LICENSE content.js icon128.png manifest.json pop.html popup.js PMM_Mod_Importer/
+
+      - name: Create Zip Archive
+        run: |
+          zip -r PMM_Mod_Importer.zip PMM_Mod_Importer/
+
+      - name: Upload Extension Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmm-mod-importer-bundle
+          path: PMM_Mod_Importer.zip
+          retention-days: 5
