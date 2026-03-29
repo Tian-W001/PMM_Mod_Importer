@@ -19,7 +19,7 @@ jobs:
       - name: Prepare Folder Structure
         run: |
           mkdir PMM_Mod_Importer
-          cp LICENSE content.js icon128.png manifest.json pop.html popup.js PMM_Mod_Importer/
+          cp LICENSE README.md content.js icon128.png manifest.json popup.html popup.js PMM_Mod_Importer/
 
       - name: Create Zip Archive
         run: |
