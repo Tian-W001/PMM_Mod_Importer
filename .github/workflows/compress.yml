@@ -6,7 +6,6 @@ on:
 jobs:
   bundle:
     runs-on: ubuntu-latest
-    # Added permissions to allow the workflow to create a release
     permissions:
       contents: write
 
@@ -14,15 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 24
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Prepare Folder Structure
+      - name: Read Version From Manifest
+        id: manifest_version
         run: |
-          mkdir PMM_Mod_Importer
-          cp LICENSE README.md content.js icon128.png manifest.json popup.html popup.js PMM_Mod_Importer/
+          VERSION=$(python3 -c "import json; print(json.load(open('PMM_Mod_Importer/manifest.json', encoding='utf-8'))['version'])")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Create Zip Archive
         run: |
@@ -31,8 +26,8 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v${{ github.run_number }}
-          name: Release v${{ github.run_number }}
+          tag_name: v${{ steps.manifest_version.outputs.version }}
+          name: Release v${{ steps.manifest_version.outputs.version }}
           files: PMM_Mod_Importer.zip
           draft: false
           prerelease: false

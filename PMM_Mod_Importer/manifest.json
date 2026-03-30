@@ -1,7 +1,7 @@
 {
     "name": "PeakyModManager Mod Importer",
     "description": "A mod importer for PeakyModManager that allows users to easily import mods from GameBanana.",
-    "version": "0.0.0.1",
+    "version": "0.0.0.2",
     "manifest_version": 3,
     "author": "Peaky",
     "icons": {
