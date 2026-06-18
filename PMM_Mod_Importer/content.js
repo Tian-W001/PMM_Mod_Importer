@@ -54,6 +54,9 @@ const characterNameMap = {
   "Cissia": "Cissia",
   "Promeia": "Promeia",
   "Starlight Billy": "StarlightBilly",
+  "Velina Airgid": "Velina",
+  "Pyrois": "Pyrois",
+  "Norma Hollowell": "Norma",
 }
 
 /**
