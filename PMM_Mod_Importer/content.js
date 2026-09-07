@@ -57,6 +57,10 @@ const characterNameMap = {
   "Velina Airgid": "Velina",
   "Pyrois": "Pyrois",
   "Norma Hollowell": "Norma",
+  "Remielle Dan": "Remielle",
+  "Sigrid de L'Azur": "Sigrid",
+  "Claret Flint": "Claret",
+  "Roxy Ifrita Pryce": "Roxy",
 }
 
 /**
