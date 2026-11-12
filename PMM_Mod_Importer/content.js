@@ -61,6 +61,8 @@ const characterNameMap = {
   "Sigrid de L'Azur": "Sigrid",
   "Claret Flint": "Claret",
   "Roxy Ifrita Pryce": "Roxy",
+  "Phoenix Reffaella": "Phoenix",
+  "Severian Lowell": "Severian",
 }
 
 /**
